@@ -30,6 +30,8 @@ dependencies. You can use the =requirements.txt= like so:
 pip install -r requirements.txt
 #+END_SRC
 
+You must also have sqlite3 installed (use your package manager).
+
 * Usage
 
 ** The Site
