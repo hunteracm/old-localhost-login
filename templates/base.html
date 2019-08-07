@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required Meta Tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Framework CSS -->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Change the title of the page depending on what's being displayed -->
+    <title>
+      {% block c_title %}
+      {% endblock %}
+    </title>
+
+    <!-- Custom CSS -->
+    {% block style %}
+    {% endblock %}
+
+  </head>
+
+  <body>
+
+    <!-- Actual Page Related-->
+    <main>
+      <div class="container">
+        <div class="header">
+          {% block header %}
+          {% endblock %}
+        </div>
+        <div class="content">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer - Consistent across all pages-->
+    {% include '_includes/footer.html' %}
+    <!-- Materialize JS for optimized loading -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+
+    <!-- Materialize toast flash -->
+    <script>
+     {% with messages = get_flashed_messages() %}
+     {% if messages %}
+     {% for message in messages %}
+     M.toast({
+       html: '{{ message }}',
+       displayLength: 4000
+     });
+     {% endfor %}
+     {% endif %}
+     {% endwith %}
+    </script>
+
+    <!-- Custom Scripts -->
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>
