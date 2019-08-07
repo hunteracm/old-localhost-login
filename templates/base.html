@@ -16,6 +16,17 @@
       {% endblock %}
     </title>
 
+    <style>
+     body {
+       display: flex;
+       min-height: 100vh;
+       flex-direction: column;
+     }
+
+     main {
+       flex: 1 0 auto;
+     }
+    </style>
     <!-- Custom CSS -->
     {% block style %}
     {% endblock %}
@@ -23,6 +34,8 @@
   </head>
 
   <body>
+    <!-- navbar - Consistent across all pages-->
+    {% include '_includes/navbar.html' %}
 
     <!-- Actual Page Related-->
     <main>

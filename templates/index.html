@@ -1,5 +1,48 @@
 {% extends "base.html" %}
 
+{% block style %}
+<style>
+ /* label focus color */
+ .input-field input[type=text]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
+   color: #ba68c8 !important;
+ }
+
+ .input-field input[type=email]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
+   color: #ba68c8 !important;
+ }
+
+ /* label underline focus color */
+ .input-field input[type=text]:focus, .materialize-textarea:focus:not([readonly]) {
+   border-bottom: 1px solid #ba68c8 !important;
+   box-shadow: 0 1px 0 0 #ba68c8 !important;
+ }
+
+ .input-field input[type=email]:focus, .materialize-textarea:focus:not([readonly]) {
+   border-bottom: 1px solid #ba68c8 !important;
+   box-shadow: 0 1px 0 0 #ba68c8 !important;
+ }
+</style>
+{% endblock %}
+
+{% block header %}
+<div class="container">
+  <br><br>
+  <h1 class="header center purple-text text-lighten-2">
+    Welcome to Hunter ACM!
+  </h1>
+  <div class="row center">
+    <h5 class="header col s12 light">
+      Enjoy the Meeting!
+    </h5>
+    <h5 class="header col s12 light">
+      Please Sign in Below
+    </h5>
+  </div>
+  <br><br><br>
+
+</div>
+{% endblock %}
+
 {% block content %}
 <div class="row">
   <form action = "{{ url_for('signin') }}" method = "POST">
@@ -20,9 +63,10 @@
       </div>
     </div>
 
-    <button class="btn waves-effect waves-light" type="submit" name="action">
+    <button class="btn waves-effect waves-light lime lighten-1 right" type="submit" name="action">
       Submit
     </button>
   </form>
 </div>
+<br><br>
 {% endblock %}
