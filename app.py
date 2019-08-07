@@ -24,11 +24,9 @@ class User(db.Model):
     email = db.Column(db.String, nullable=False)
 
 
-def add_to_db(data):
-    # db.session.add(User(fname="Example", lname="example", email="example@example.com"))
-    # db.session.commit()
-    print(data)
-    return
+def add_to_db(d):
+    db.session.add(User(fname=d['fname'], lname=d['lname'], email=d['email']))
+    db.session.commit()
 
 
 # routes begin here
@@ -39,7 +37,7 @@ def root():
 
 @app.route('/signin', methods=['POST'])
 def signin():
-    add_to_db(request.form)
+    add_to_db(request.form.to_dict())
     return redirect(url_for('root'))
 
 
