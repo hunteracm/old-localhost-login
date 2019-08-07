@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import datetime
-import os
-
 
 app = Flask(__name__)
 
@@ -24,6 +22,7 @@ class User(db.Model):
     email = db.Column(db.String, nullable=False)
 
 
+# add an user to db
 def add_to_db(d):
     db.session.add(User(fname=d['fname'], lname=d['lname'], email=d['email']))
     db.session.commit()
