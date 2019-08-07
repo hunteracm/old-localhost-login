@@ -1,0 +1,47 @@
+#+TITLE: localhost-login
+#+AUTHOR: Hunter ACM
+#+STARTIP: overview
+
+An easy to use [offline] attendance form.
+
+* Prerequisites
+
+** Recommended
+It is recommended to use a [[https://docs.python-guide.org/dev/virtualenvs/][python virtual environment]]. You can create the environment at the root
+with:
+
+#+BEGIN_SRC bash
+virtualenv venv
+#+END_SRC
+
+Then you can activate the environment:
+
+#+BEGIN_SRC bash
+. /venv/bin/activate
+#+END_SRC
+
+Note: You can deactivate the environment with =deactivate=, but it should be active while you run the app.
+
+** Necessary
+Whether you've chosen to use a virtual environment or now, you have to install the application
+dependencies. You can use the =requirements.txt= like so:
+
+#+BEGIN_SRC bash
+pip install -r requirements.txt
+#+END_SRC
+
+* Usage
+
+** The Site
+After the dependencies are ready, run the application:
+
+#+BEGIN_SRC bash
+python app.py
+#+END_SRC
+
+Navigate to =localhost:5000= and the website should display. Users can sign in now.
+
+** The Data
+Once done, close the flask server with =C-c=. Then navigate to =data/= and the an sqlite database for
+the data should be present in the format =YYYY-MM-DD.db=. You can use the =download.sh= script to
+convert it to a csv file (it will save as =data.csv=).
