@@ -9,47 +9,65 @@ app.secret_key = "keysmithsmakekeys"
 # configure database path
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data/sign_ins.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+DB = SQLAlchemy(app)
+
+# variables for app
+TODAY = datetime.datetime.now().strftime("%Y-%m-%d")
+today_id = None
+users = None
 
 
 # database setup
-class User(db.Model):
+class User(DB.Model):
     "Table to hold each member's data."
-    id = db.Column(db.Integer, primary_key=True)
-    fname = db.Column(db.String, nullable=False)
-    lname = db.Column(db.String, nullable=False)
-    empl = db.Column(db.Integer, nullable=False)
-    email = db.Column(db.String, nullable=False)
+    id = DB.Column(DB.Integer, primary_key=True)
+    fname = DB.Column(DB.String, nullable=False)
+    lname = DB.Column(DB.String, nullable=False)
+    empl = DB.Column(DB.Integer, nullable=False)
+    email = DB.Column(DB.String, nullable=False)
 
 
-class signins(db.Model):
+class Meetings(DB.Model):
     "ID should reference a member. Table per meeting date."
-    now = datetime.datetime.now()
-    __tablename__ = now.strftime("%Y-%m-%d")
-    id = db.Column(db.Integer, primary_key=True)
-    empl = db.Column(db.Integer, nullable=False)
+    id = DB.Column(DB.Integer, primary_key=True)
+    date = DB.Column(DB.String, nullable=False)
 
 
-# add an user to db
+class Signins(DB.Model):
+    "ID should reference a member. Table per meeting date."
+    id = DB.Column(DB.Integer, primary_key=True)
+    user_id = DB.Column(DB.Integer, nullable=False)
+    meeting_id = DB.Column(DB.Integer, nullable=False)
+
+
+# add an user to DB
 def add_to_db(data):
-    # TODO:
-    # Perhaps load users into an list at startup and then compare to list,
-    # and as users are added, add to db + list.
-    # Check list for user, and create ac?
-    # Check list for query for empl id
-    if len(data['empl']) == 8 and data['empl'].isdigit():
-        db.session.add(User(fname=data['fname'],lname=data['lname'],empl=int(data['empl']),email=data['email']))
-        db.session.add(signins(empl=int(data['empl'])))
-    else:
+    "Add log in"
+    c_u = User(fname=data['fname'], lname=data['lname'], empl=int(data['empl']), email=data['email'])
+    if not (len(data['empl']) == 8 and data['empl'].isdigit()):
         flash('Bad empl id.')
-    db.session.commit()
+    else:
+        if not User.query.filter_by(empl=c_u.empl).first():
+            DB.session.add(c_u)
+            DB.session.commit()
+        c_id = User.query.filter_by(empl=c_u.empl).first().id
+        DB.session.add(Signins(user_id=c_id, meeting_id=today_id))
+        DB.session.commit()
+    DB.session.commit()
 
 
 # routes begin here
 @app.route('/')
 def root():
-    "Endpoint to render signin page."
-    return render_template('index.html')
+    "Endpoint to render signin page+sets up meetings DB/ fetches information."
+    if not Meetings.query.filter_by(date=TODAY).first():
+        DB.session.add(Meetings(date=TODAY))
+        DB.session.commit()
+    global today_id
+    today_id = Meetings.query.filter_by(date=TODAY).first().id
+    global users
+    users = User.query.order_by(User.id).all()
+    return render_template('index.html', u=users)
 
 
 @app.route('/signin', methods=['POST'])
@@ -60,6 +78,6 @@ def signin():
 
 
 if __name__ == "__main__":
-    db.create_all()
+    DB.create_all()
     app.debug = True
     app.run()
