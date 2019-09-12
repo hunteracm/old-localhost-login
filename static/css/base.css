@@ -64,3 +64,21 @@ p {
     overflow-y: auto;
     height: 30vh;
 }
+
+
+.social [class*="fa-"] {
+    background-color: #7e57c2;
+    border-radius: 30px;
+    color: #fff;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    margin: auto 3px;
+    width: 30px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.fa:hover{
+    background-color: #333;
+}
