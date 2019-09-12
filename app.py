@@ -1,7 +1,6 @@
+import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-import datetime
-import json
 
 app = Flask(__name__)
 app.secret_key = "keysmithsmakekeys"
@@ -13,7 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 DB = SQLAlchemy(app)
 
 # variables for app
-TODAY = datetime.datetime.now().strftime("%Y-%m-%d")
+TODAY = datetime.datetime.now().strftime("%Y-%m-%d")  # change for a diff name
 today_id = None
 users = None
 
@@ -64,7 +63,7 @@ def splat_user(u):
         'lname': u.lname,
         'empl': u.empl,
         'email': u.email
-        }
+    }
 
 
 # routes begin here
