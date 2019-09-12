@@ -46,28 +46,43 @@
 {% block content %}
 <script>
  var users = {{ u | tojson }};
+
+ function autofill(){
+   var empl_val = document.getElementById('empl').value;
+   var email_val = document.getElementById('email').value;
+
+   for (i = 0; i < users.length; i++) {
+     if((users[i]['empl'] == empl_val) || ((users[i]['email'] != "") && (users[i]['email'] == email_val))) {
+       user = users[i];
+       document.getElementById('fname').value= user.fname;
+       document.getElementById('lname').value= user.lname;
+       document.getElementById('empl').value= user.empl;
+       document.getElementById('email').value= user.email;
+     }
+   }
+ }
 </script>
 
 <div class="row">
   <form action = "{{ url_for('signin') }}" method = "POST">
     <div class="row">
       <div class="input-field col s6">
-        <input name="fname" type="text">
+        <input name="fname" type="text" id="fname">
         <label for="fname">First Name</label>
       </div>
       <div class="input-field col s6">
-        <input name="lname" type="text">
+        <input name="lname" type="text" id="lname">
         <label for="lname">Last Name</label>
       </div>
     </div>
     <div class="row">
       <div class="input-field col s12">
-        <input name="empl" type="text">
-        <label for="empl">EMPL ID (for first time visitors only)</label>
+        <input name="empl" type="text" id="empl" required onchange="autofill()">
+        <label for="empl">EMPL ID</label>
       </div>
       <div class="input-field col s12">
-        <input name="email" type="email">
-        <label for="email">Email (for first time visitors only)</label>
+        <input name="email" type="email" id="email" onchange="autofill()">
+        <label for="email">Email</label>
       </div>
     </div>
 
