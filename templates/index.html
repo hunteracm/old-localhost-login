@@ -44,6 +44,10 @@
 {% endblock %}
 
 {% block content %}
+<script>
+ var users = {{ u | tojson }};
+</script>
+
 <div class="row">
   <form action = "{{ url_for('signin') }}" method = "POST">
     <div class="row">

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+import json
 
 app = Flask(__name__)
 app.secret_key = "keysmithsmakekeys"
@@ -56,6 +57,16 @@ def add_to_db(data):
     DB.session.commit()
 
 
+def splat_user(u):
+    "Serialize user object for js arrays."
+    return {
+        'fname': u.fname,
+        'lname': u.lname,
+        'empl': u.empl,
+        'email': u.email
+        }
+
+
 # routes begin here
 @app.route('/')
 def root():
@@ -67,7 +78,7 @@ def root():
     today_id = Meetings.query.filter_by(date=TODAY).first().id
     global users
     users = User.query.order_by(User.id).all()
-    return render_template('index.html', u=users)
+    return render_template('index.html', u=list(map(splat_user, users)))
 
 
 @app.route('/signin', methods=['POST'])
