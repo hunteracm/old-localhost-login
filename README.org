@@ -44,6 +44,4 @@ python app.py
 Navigate to =localhost:5000= and the website should display. Users can sign in now.
 
 ** The Data
-Once done, close the flask server with =C-c=. Then navigate to =data/= and the an sqlite database for
-the data should be present in the format =YYYY-MM-DD.db=. You can use the =download.sh= script to
-convert it to a csv file (it will save as =data.csv=).
+
