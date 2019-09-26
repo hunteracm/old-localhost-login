@@ -23,7 +23,7 @@ Then you can activate the environment:
 Note: You can deactivate the environment with =deactivate=, but it should be active while you run the app.
 
 ** Necessary
-Whether you've chosen to use a virtual environment or now, you have to install the application
+Whether you've chosen to use a virtual environment or not, you have to install the application
 dependencies. You can use the =requirements.txt= like so:
 
 #+BEGIN_SRC bash
